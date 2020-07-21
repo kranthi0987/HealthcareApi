@@ -27,6 +27,7 @@ class UserProfileView(RetrieveAPIView):
                 'id': user_profile.id,
                 'email':request.user.email,
                 'last_login_date_time': user_profile.last_login_date_time,
+                'specialist':user_profile.specialist,
 
             }
 

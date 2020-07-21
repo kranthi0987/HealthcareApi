@@ -8,6 +8,12 @@ class PatientSerializer(serializers.ModelSerializer):
         model = PatientModel
         fields = '__all__'
 
+    # def to_representation(self, instance):
+    #     return {
+    #         "active": instance.active,
+    #         "log_details": instance.patient_logs.values('id', 'description')
+    #     }
+
 
 class PatientLogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,7 +22,6 @@ class PatientLogSerializer(serializers.ModelSerializer):
 
 
 class PatientOldRecordSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ImageModel
         fields = '__all__'

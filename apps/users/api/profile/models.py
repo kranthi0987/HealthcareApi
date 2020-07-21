@@ -21,6 +21,8 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=50, unique=False)
     phone_number = models.CharField(max_length=10, unique=False, null=False, blank=False)
     date_of_birth = models.CharField(max_length=50, unique=False)
+    specialist = models.CharField(max_length=50, unique=False, blank=True)
+    # img = models.ImageField(blank=True, null=True, upload_to='doctorprofile/',default='doctorprofile/defaultdoctor.jpg')
     # GENDER_CHOICES = (
     #     ('M', 'Male'),
     #     ('F', 'Female'),
@@ -28,6 +30,7 @@ class UserProfile(models.Model):
     # gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     gender = models.CharField(max_length=10, unique=False)
     last_login_date_time = models.DateTimeField(default=now)
+    active = models.BooleanField(default=True, null=True)
 
     class Meta:
         '''

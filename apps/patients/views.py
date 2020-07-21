@@ -20,7 +20,7 @@ def patients_list(request):
     """
     # permission_classes = (IsAuthenticated,)
     # authentication_class = JSONWebTokenAuthentication
-
+    # Getting the list of patients or create Patient
     if request.method == 'GET':
         products = PatientModel.objects.all()
         serializer = PatientSerializer(products, context={'request': request}, many=True)
@@ -31,6 +31,21 @@ def patients_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+@authentication_classes((JSONWebTokenAuthentication,))
+def patient_count(request):
+    """
+    List all products, or create a new product.
+    """
+    # permission_classes = (IsAuthenticated,)
+    # authentication_class = JSONWebTokenAuthentication
+    # Getting the list of patients or create Patient
+    if request.method == 'POST':
+        products = PatientModel.objects.filter(doc_id=request.data['doc_id']).count()
+        return Response(products)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -63,27 +78,37 @@ def patient_detail(request, pk):
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'POST'])
+
+@api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 @authentication_classes((JSONWebTokenAuthentication,))
-def patientslog_list(request):
+def patientslog_list_byid(request):
     """
     List all products, or create a new product.
     """
     # permission_classes = (IsAuthenticated,)
     # authentication_class = JSONWebTokenAuthentication
 
-    if request.method == 'GET':
-        patientslog_list = PatientLogModel.objects.all()
+    if request.method == 'POST':
+        patientslog_list = PatientLogModel.objects.filter(patient_id=request.data['patient_id']).all()
         serializer = PatientLogSerializer(patientslog_list, context={'request': request}, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+@authentication_classes((JSONWebTokenAuthentication,))
+def patientslog_post_byid(request):
+    """
+    List all products, or create a new product.
+    """
+    # permission_classes = (IsAuthenticated,)
+    # authentication_class = JSONWebTokenAuthentication
+    if request.method == 'POST':
         serializer = PatientLogSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes((IsAuthenticated,))
