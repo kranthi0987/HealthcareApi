@@ -5,6 +5,8 @@ Created on Thu Dec  6 11:14:00 2019
 
 @author: sambhav
 """
+import json
+
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
@@ -20,7 +22,9 @@ JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'id', 'date_of_birth', 'phone_number', 'gender', 'last_login_date_time')
+        fields = (
+            'first_name', 'last_name', 'id', 'date_of_birth', 'phone_number', 'gender', 'camera_ip_address', 'wsport',
+            'last_login_date_time', 'pic')
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -32,15 +36,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        profile_data = validated_data.pop('profile')
+        profile_data = self.initial_data['profile']
+        json1_data = json.loads(profile_data)
+        pic = self.initial_data['pic']
         user = User.objects.create_user(**validated_data)
         UserProfile.objects.create(
             user=user,
-            first_name=profile_data['first_name'],
-            last_name=profile_data['last_name'],
-            phone_number=profile_data['phone_number'],
-            date_of_birth=profile_data['date_of_birth'],
-            gender=profile_data['gender']
+            first_name=json1_data['first_name'],
+            last_name=json1_data['last_name'],
+            phone_number=json1_data['phone_number'],
+            date_of_birth=json1_data['date_of_birth'],
+            gender=json1_data['gender'],
+            pic=pic
         )
         return user
 

@@ -1,3 +1,4 @@
+
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -25,9 +26,13 @@ class UserProfileView(RetrieveAPIView):
                 'date_of_birth': user_profile.date_of_birth,
                 'gender': user_profile.gender,
                 'id': user_profile.id,
-                'email':request.user.email,
+                'email': request.user.email,
                 'last_login_date_time': user_profile.last_login_date_time,
-                'specialist':user_profile.specialist,
+                'specialist': user_profile.specialist,
+                'camera_ip_address': user_profile.camera_ip_address,
+                'wsport': user_profile.wsport,
+                'pic': user_profile.pic.url,
+                'server_ip_address': user_profile.server_ip_address,
 
             }
 

@@ -11,10 +11,9 @@ class PatientModel(models.Model):
     # uuid = models.UUIDField(unique=False, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=150, help_text="First Name of the Patient")
     last_name = models.CharField(max_length=150, help_text="Last Name of the Patient", null=True, blank=True)
-    age = models.PositiveIntegerField(null=True, blank=True)
     dob = models.CharField(max_length=100, unique=False, blank=True)
     date_of_joined = models.DateTimeField(null=True, blank=True, default=datetime.now)
-    img = models.FileField(blank=True, null=True, upload_to='patientprofile/')
+    profile_image = models.FileField(blank=True, null=True, upload_to='patientprofile/')
     gender = models.CharField(max_length=10, unique=False)
     mobile = models.CharField(max_length=14, unique=False)
     email = models.EmailField(max_length=70, null=True, blank=True, unique=False)
@@ -54,9 +53,24 @@ class PatientLogModel(models.Model):
     created_on = models.DateTimeField(null=True, blank=True, default=datetime.now)
     consulted_on = models.DateTimeField(null=True, blank=True, default=datetime.now)
     log_documents = models.FileField(blank=True, null=True, upload_to='patientoldlogs/')
-    session_log = models.FileField(blank=True, null=True, upload_to='patientlogs/')
+    session_log = models.CharField(blank=True, null=True, max_length=500, help_text="patient stream data")
     patient_id = models.CharField(max_length=500, help_text="patient id", null=True, blank=True)
     # patient_model =  models.ForeignKey(PatientModel,null=True, blank=True,related_name='patient_logs',
     #                                         on_delete=models.PROTECT)
     def __str__(self):
         return str(self.consulted_on)
+
+
+class StudentModel(models.Model):
+    stid = models.IntegerField(primary_key=True,auto_created=True)
+    name = models.CharField(max_length=200,help_text="entername",null=True,blank=True)
+    def __str__(self):
+        return str(self.stid)
+
+
+class studentimages(models.Model):
+    id = models.IntegerField(primary_key=True,auto_created=True)
+    text = models.CharField(max_length=200,help_text="enter",null=True,blank=True)
+    stid = models.ForeignKey(StudentModel,related_name='studentimages',on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.id)

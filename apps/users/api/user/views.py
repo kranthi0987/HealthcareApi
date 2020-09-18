@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Dec  6 14:04:16 2019
-
-@author: sambhav
-"""
-from rest_framework import status
+from rest_framework import status, viewsets, parsers, response, decorators
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from apps.users.api.profile.models import UserProfile
 from apps.users.api.user.serializers import UserRegistrationSerializer, UserLoginSerializer
+from rest_framework.parsers import FormParser, MultiPartParser
 
 
 class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = (AllowAny,)
+    parser_classes = (MultiPartParser, FormParser,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

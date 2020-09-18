@@ -183,7 +183,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIR = [
-    # os.path.join(BASE_DIR, 'whatsappbusiness/static'),
     # TEMPLATE_DIR,
     os.path.join(BASE_DIR, 'apps/landingpage/templates/../apps/landingpage/static/assets'),
     os.path.join(BASE_DIR, 'apps/users/web/webusersystem/static')

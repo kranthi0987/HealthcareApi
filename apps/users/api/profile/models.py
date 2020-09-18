@@ -28,12 +28,11 @@ class UserProfile(models.Model):
     #     ('F', 'Female'),
     # )
     # gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    pic = models.ImageField(upload_to='userprofile/', blank=True, default='defaultdoctor.jpg', null=True)
+    camera_ip_address = models.TextField(null=False, blank=True, default='192.168.1.121')
+    server_ip_address = models.TextField(null=False, blank=True, default='192.168.1.121')
+    wsport = models.TextField(null=False, blank=True, default='9999')
     gender = models.CharField(max_length=10, unique=False)
     last_login_date_time = models.DateTimeField(default=now)
-    active = models.BooleanField(default=True, null=True)
 
-    class Meta:
-        '''
-        to set table name in database
-        '''
-        db_table = "profile"
+    active = models.BooleanField(default=True, null=True)

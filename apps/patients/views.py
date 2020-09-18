@@ -94,6 +94,7 @@ def patientslog_list_byid(request):
         serializer = PatientLogSerializer(patientslog_list, context={'request': request}, many=True)
         return Response(serializer.data)
 
+
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 @authentication_classes((JSONWebTokenAuthentication,))
@@ -109,6 +110,7 @@ def patientslog_post_byid(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes((IsAuthenticated,))
