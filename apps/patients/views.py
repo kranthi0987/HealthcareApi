@@ -11,7 +11,7 @@ from apps.patients.models import PatientModel, PatientLogModel
 from apps.patients.serializers import PatientSerializer, PatientLogSerializer
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 @authentication_classes((JSONWebTokenAuthentication,))
 def patients_list(request):
@@ -21,16 +21,29 @@ def patients_list(request):
     # permission_classes = (IsAuthenticated,)
     # authentication_class = JSONWebTokenAuthentication
     # Getting the list of patients or create Patient
-    if request.method == 'GET':
-        products = PatientModel.objects.all()
-        serializer = PatientSerializer(products, context={'request': request}, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         serializer = PatientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+@authentication_classes((JSONWebTokenAuthentication,))
+def patient_list_byid(request):
+    """
+    List all products by Doc id.
+    """
+    # permission_classes = (IsAuthenticated,)
+    # authentication_class = JSONWebTokenAuthentication
+    # Getting the list of patients or create Patient
+    if request.method == 'POST':
+        # products = PatientModel.objects.all()
+        products = PatientModel.objects.filter(doc_id=request.data['doc_id'])
+        serializer = PatientSerializer(products, context={'request': request}, many=True)
+        return Response(serializer.data)
 
 
 @api_view(['POST'])

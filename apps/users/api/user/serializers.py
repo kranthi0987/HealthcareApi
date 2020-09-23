@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = (
             'first_name', 'last_name', 'id', 'date_of_birth', 'phone_number', 'gender', 'camera_ip_address', 'wsport',
-            'last_login_date_time', 'pic')
+            'last_login_date_time', 'pic', 'address')
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -47,6 +47,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             phone_number=json1_data['phone_number'],
             date_of_birth=json1_data['date_of_birth'],
             gender=json1_data['gender'],
+            address=json1_data['address'],
             pic=pic
         )
         return user

@@ -5,6 +5,7 @@ from apps.patients import views
 
 urlpatterns = [
     path('patient/list/', views.patients_list),
+    path('patient/listbyid/', views.patient_list_byid),
     path('patient/count/', views.patient_count),
     url(r'^patient/(?P<pk>[0-9]+)$', views.patient_detail),
     path('patientlog/add/', views.patientslog_post_byid),

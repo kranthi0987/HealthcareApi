@@ -33,6 +33,7 @@ class UserProfile(models.Model):
     server_ip_address = models.TextField(null=False, blank=True, default='192.168.1.121')
     wsport = models.TextField(null=False, blank=True, default='9999')
     gender = models.CharField(max_length=10, unique=False)
+    address = models.TextField( blank=True, null=True)
     last_login_date_time = models.DateTimeField(default=now)
 
     active = models.BooleanField(default=True, null=True)

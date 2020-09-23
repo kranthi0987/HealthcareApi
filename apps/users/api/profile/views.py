@@ -33,6 +33,7 @@ class UserProfileView(RetrieveAPIView):
                 'wsport': user_profile.wsport,
                 'pic': user_profile.pic.url,
                 'server_ip_address': user_profile.server_ip_address,
+                'address': user_profile.address
 
             }
 
